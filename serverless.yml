@@ -13,13 +13,7 @@ package:
 
 build:
   esbuild:
-    bundle: true
-    minify: false
-    sourcemap: false
-    exclude:
-      - "@aws-sdk/*"
-    external:
-      - "@aws-sdk/*"
+    configFile: ./esbuild.config.mjs
 
 functions:
   hello:

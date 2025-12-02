@@ -22,7 +22,8 @@
     "paths": {
       "@application/*": ["src/application/*"],
       "@kernel/*": ["src/kernel/*"],
-      "@main/*": ["src/main/*"]
+      "@main/*": ["src/main/*"],
+      "@shared/*": ["src/shared/*"]
     }
   }
 }
