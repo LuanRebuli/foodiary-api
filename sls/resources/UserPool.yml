@@ -5,7 +5,6 @@ Resources:
       UserPoolName: ${self:custom.cognito.UserPoolName}
       DeletionProtection: ACTIVE
       MfaConfiguration: OFF
-      GenerateSecret: true
       AutoVerifiedAttributes:
         - email
       AdminCreateUserConfig:
@@ -28,6 +27,7 @@ Resources:
     Properties:
       ClientName: ${self:service}-${self:provider.stage}-UserPoolClient
       UserPoolId: !Ref UserPool
+      GenerateSecret: true
       ExplicitAuthFlows:
         - ALLOW_USER_PASSWORD_AUTH
       TokenValidityUnits:
