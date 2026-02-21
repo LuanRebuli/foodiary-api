@@ -17,7 +17,7 @@ export class AppConfig {
 
     this.db = {
       dynamodb: {
-        mainTable: env.COGNITO_CLIENT_ID,
+        mainTable: env.MAIN_TABLE_NAME,
       },
     };
   }
