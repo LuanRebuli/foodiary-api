@@ -1,4 +1,8 @@
+import { InvalidRefreshTokenError } from "@application/errors/application/InvalidRefreshToken";
 import {
+  ConfirmForgotPasswordCommand,
+  ForgotPasswordCommand,
+  GetTokensFromRefreshTokenCommand,
   InitiateAuthCommand,
   SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
@@ -64,6 +68,58 @@ export class AuthGateway {
     };
   }
 
+  async refreshToken({
+    refreshToken,
+  }: AuthGateway.RefreshTokenParams): Promise<AuthGateway.RefreshTokenResult> {
+    const command = new GetTokensFromRefreshTokenCommand({
+      ClientId: this.appConfig.auth.cognito.clientId,
+      RefreshToken: refreshToken,
+      ClientSecret: this.appConfig.auth.cognito.clientSecret,
+    });
+
+    const { AuthenticationResult } = await cognitoClient.send(command);
+
+    if (
+      !AuthenticationResult?.AccessToken ||
+      !AuthenticationResult?.RefreshToken
+    ) {
+      throw new InvalidRefreshTokenError();
+    }
+
+    return {
+      accessToken: AuthenticationResult.AccessToken,
+      refreshToken: AuthenticationResult.RefreshToken,
+    };
+  }
+
+  async forgotPassword({
+    email,
+  }: AuthGateway.ForgotPasswordParams): Promise<void> {
+    const command = new ForgotPasswordCommand({
+      ClientId: this.appConfig.auth.cognito.clientId,
+      Username: email,
+      SecretHash: this.getSecretHash(email),
+    });
+
+    await cognitoClient.send(command);
+  }
+
+  async confirmForgotPassword({
+    email,
+    confirmationCode,
+    password,
+  }: AuthGateway.ConfirmForgotPasswordParams): Promise<void> {
+    const command = new ConfirmForgotPasswordCommand({
+      ClientId: this.appConfig.auth.cognito.clientId,
+      ConfirmationCode: confirmationCode,
+      Password: password,
+      Username: email,
+      SecretHash: this.getSecretHash(email),
+    });
+
+    await cognitoClient.send(command);
+  }
+
   private getSecretHash(email: string): string {
     const { clientSecret, clientId } = this.appConfig.auth.cognito;
 
@@ -87,8 +143,32 @@ export namespace AuthGateway {
     email: string;
     password: string;
   };
+
   export type SignInResult = {
     accessToken: string;
     refreshToken: string;
   };
+
+  export type RefreshTokenParams = {
+    refreshToken: string;
+  };
+
+  export type RefreshTokenResult = {
+    accessToken: string;
+    refreshToken: string;
+  };
+
+  export type ForgotPasswordParams = {
+    email: string;
+  };
+
+  export type ForgotPasswordResult = null;
+
+  export type ConfirmForgotPasswordParams = {
+    email: string;
+    confirmationCode: string;
+    password: string;
+  };
+
+  export type ConfirmForgotPasswordResult = null;
 }
