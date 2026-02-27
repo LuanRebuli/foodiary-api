@@ -4,17 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "email:dev": "email dev --dir src/infra/emails"
   },
   "author": "Luan Rebuli",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@react-email/preview-server": "5.2.8",
+    "@react-email/render": "^2.0.4",
     "@types/aws-lambda": "^8.10.157",
     "@types/node": "^25.0.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "esbuild-plugin-tsc": "^0.5.0",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
+    "react-email": "5.2.8",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.3"
   },
@@ -22,7 +28,17 @@
     "@aws-sdk/client-cognito-identity-provider": "^3.947.0",
     "@aws-sdk/client-dynamodb": "^3.957.0",
     "@aws-sdk/lib-dynamodb": "^3.957.0",
+    "@react-email/body": "^0.2.1",
+    "@react-email/container": "^0.0.16",
+    "@react-email/head": "^0.0.13",
+    "@react-email/heading": "^0.0.16",
+    "@react-email/html": "^0.0.12",
+    "@react-email/preview": "^0.0.14",
+    "@react-email/section": "^0.0.17",
+    "@react-email/text": "^0.1.6",
     "ksuid": "^3.0.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "reflect-metadata": "^0.2.2",
     "zod": "^4.1.12"
   }

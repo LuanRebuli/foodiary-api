@@ -5,7 +5,7 @@ import { Schema } from "@kernel/decorators/Schema";
 import {
   ConfirmForgotPasswordBody,
   ConfirmForgotPasswordSchema,
-} from "../schemas/ConfirmforgotPasswordSchema";
+} from "../schemas/ConfirmForgotPasswordSchema";
 
 @Injectable()
 @Schema(ConfirmForgotPasswordSchema)
