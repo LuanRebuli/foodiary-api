@@ -12,6 +12,7 @@ export class AppConfig {
       cognito: {
         clientId: env.COGNITO_CLIENT_ID,
         clientSecret: env.COGNITO_CLIENT_SECRET,
+        pool: env.COGNITO_POOL_ID,
       },
     };
 
@@ -28,6 +29,7 @@ export namespace AppConfig {
     cognito: {
       clientId: string;
       clientSecret: string;
+      pool: string;
     };
   };
 
