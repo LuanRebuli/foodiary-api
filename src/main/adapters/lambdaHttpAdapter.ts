@@ -22,9 +22,7 @@ export function lambdaHttpAdapter(controller: Controller<any, unknown>) {
       const queryParams = event.queryStringParameters ?? {};
       const accountId =
         "authorizer" in event.requestContext
-          ? (event.requestContext.authorizer.jwt.claims[
-              "custom:internalId"
-            ] as string)
+          ? (event.requestContext.authorizer.jwt.claims.internalId as string)
           : null;
 
       const response = await controller.execute({
