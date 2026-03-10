@@ -1,3 +1,4 @@
+import { Saga } from "@application/contracts/Saga";
 import { Account } from "@application/entities/Account";
 import { Profile } from "@application/entities/Profile";
 import { EmailAlreadyInUse } from "@application/errors/application/EmailAlreadyInUse";
@@ -33,31 +34,47 @@ export class SignUpUseCase {
 
     const goal = GoalCalculator.calculate(profile, profile.goal);
 
-    const { externalId } = await this.authGateway.signUp({
-      email,
-      password,
-      internalId: account.id,
+    let externalId: string;
+    let accessToken: string;
+    let refreshToken: string;
+
+    const saga = new Saga();
+
+    saga.addStep({
+      execute: async () => {
+        const result = await this.authGateway.signUp({
+          email,
+          password,
+          internalId: account.id,
+        });
+        externalId = result.externalId;
+        account.externalId = externalId;
+      },
+      compensate: async () => {
+        await this.authGateway.deleteUser({ externalId: externalId! });
+      },
     });
 
-    try {
-      account.externalId = externalId;
+    saga.addStep({
+      execute: async () => {
+        await this.signUpUow.run({ account, goal, profile });
+      },
+    });
 
-      await this.signUpUow.run({ account, goal, profile });
+    saga.addStep({
+      execute: async () => {
+        const result = await this.authGateway.signIn({ email, password });
+        accessToken = result.accessToken;
+        refreshToken = result.refreshToken;
+      },
+    });
 
-      const { accessToken, refreshToken } = await this.authGateway.signIn({
-        email,
-        password,
-      });
+    await saga.execute();
 
-      return {
-        accessToken,
-        refreshToken,
-      };
-    } catch (error) {
-      await this.authGateway.deleteUser({ externalId });
-
-      throw error;
-    }
+    return {
+      accessToken: accessToken!,
+      refreshToken: refreshToken!,
+    };
   }
 }
 
