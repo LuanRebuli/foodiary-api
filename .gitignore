@@ -15,7 +15,7 @@ build/
 *.d.ts.map
 *.js.map
 !eslint.config.mts
-!vitest.config.ts
+!vitest.config.mts
 
 # TypeScript
 *.tsbuildinfo
