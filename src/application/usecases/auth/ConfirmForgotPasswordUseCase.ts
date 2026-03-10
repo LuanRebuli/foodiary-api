@@ -1,6 +1,6 @@
 import { InvalidForgetPasswordCodeError } from "@application/errors/application/InvalidForgetPasswordCode";
 import { Injectable } from "@kernel/decorators/Injectable";
-import { AuthGateway } from "src/infra/gateways/AuthGateway";
+import { AuthGateway } from "@infra/gateways/AuthGateway";
 
 @Injectable()
 export class ConfirmForgotPasswordUseCase {

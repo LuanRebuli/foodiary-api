@@ -5,7 +5,7 @@ import { GoalCalculator } from "@application/services/GoalCalculator";
 import { AccountRepository } from "@infra/database/dynamo/repositories/AccountRepository";
 import { SignUpUnitOfWork } from "@infra/database/dynamo/uow/SignUpUnitOfWork";
 import { Injectable } from "@kernel/decorators/Injectable";
-import { AuthGateway } from "src/infra/gateways/AuthGateway";
+import { AuthGateway } from "@infra/gateways/AuthGateway";
 
 @Injectable()
 export class SignUpUseCase {
