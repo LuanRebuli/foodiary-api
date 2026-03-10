@@ -4,8 +4,8 @@ import { EmailAlreadyInUse } from "@application/errors/application/EmailAlreadyI
 import { GoalCalculator } from "@application/services/GoalCalculator";
 import { AccountRepository } from "@infra/database/dynamo/repositories/AccountRepository";
 import { SignUpUnitOfWork } from "@infra/database/dynamo/uow/SignUpUnitOfWork";
-import { Injectable } from "@kernel/decorators/Injectable";
 import { AuthGateway } from "@infra/gateways/AuthGateway";
+import { Injectable } from "@kernel/decorators/Injectable";
 
 @Injectable()
 export class SignUpUseCase {
