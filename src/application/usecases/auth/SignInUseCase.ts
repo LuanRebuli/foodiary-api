@@ -1,6 +1,6 @@
 import { InvalidCredentialsError } from "@application/errors/application/InvalidCredentials";
+import { AuthGateway } from "@infra/gateways/AuthGateway";
 import { Injectable } from "@kernel/decorators/Injectable";
-import { AuthGateway } from "src/infra/gateways/AuthGateway";
 
 @Injectable()
 export class SignInUseCase {

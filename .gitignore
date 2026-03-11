@@ -1,6 +1,5 @@
 # Dependencies
 node_modules/
-package-lock.json
 
 # Serverless
 .serverless/
@@ -15,7 +14,7 @@ build/
 *.d.ts.map
 *.js.map
 !eslint.config.mts
-!vitest.config.ts
+!vitest.config.mts
 
 # TypeScript
 *.tsbuildinfo
