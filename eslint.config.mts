@@ -21,7 +21,7 @@ export default tseslint.config(
       "key-spacing": ["error", { beforeColon: false, afterColon: true }],
       "no-multiple-empty-lines": ["error", { max: 1 }],
       "eol-last": ["error", "always"],
-      indent: ["error", "always"],
+      indent: ["error", 2],
       curly: ["error", "all"],
       "no-duplicate-imports": "error",
       "no-console": "warn",
